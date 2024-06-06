@@ -2,26 +2,26 @@
 using MVC_Mini_Project.Helpers;
 using MVC_Mini_Project.Helpers.Extensions;
 using MVC_Mini_Project.Services.Interfaces;
-using MVC_Mini_Project.ViewModels.Sliders;
+using MVC_Mini_Project.ViewModels.Informations;
 
 namespace MVC_Mini_Project.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class SliderController : Controller
+    public class InformationController : Controller
     {
-        private readonly ISliderService _sliderService;
+        private readonly IInformationService _informationService;
 
-        public SliderController(ISliderService sliderService)
+        public InformationController(IInformationService informationService)
         {
-            _sliderService = sliderService;
+            _informationService = informationService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index(int page = 1)
         {
-            var sliders = await _sliderService.GetAllPaginateAsync(page, 3);
+            var sliders = await _informationService.GetAllPaginateAsync(page, 3);
 
-            var mappedDatas = sliders.Select(m => new SliderVM
+            var mappedDatas = sliders.Select(m => new InformationVM
             {
                 Id = m.Id,
                 Title = m.Title,
@@ -31,7 +31,7 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
 
             int totalPageCount = await GetPageCountAsync(3);
 
-            Paginate<SliderVM> response = new(mappedDatas, totalPageCount, page);
+            Paginate<InformationVM> response = new(mappedDatas, totalPageCount, page);
 
             return View(response);
         }
@@ -44,7 +44,7 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(SliderCreateVM request)
+        public async Task<IActionResult> Create(InformationCreateVM request)
         {
             if (!ModelState.IsValid)
             {
@@ -57,13 +57,13 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
                 return View();
             }
 
-            if (!request.Image.CheckFileSize(500))
+            if (!request.Image.CheckFileSize(200))
             {
                 ModelState.AddModelError("Image", "Image size must be max 200 KB");
                 return View();
             }
 
-            await _sliderService.CreateAsync(request);
+            await _informationService.CreateAsync(request);
 
             return RedirectToAction(nameof(Index));
         }
@@ -73,11 +73,11 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         {
             if (id is null) return BadRequest();
 
-            var category = await _sliderService.GetByIdAsync((int)id);
+            var category = await _informationService.GetByIdAsync((int)id);
 
             if (category is null) return NotFound();
 
-            await _sliderService.DeleteAsync(category);
+            await _informationService.DeleteAsync(category);
 
             return RedirectToAction(nameof(Index));
         }
@@ -87,11 +87,11 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         {
             if (id is null) return BadRequest();
 
-            var slider = await _sliderService.GetByIdAsync((int)id);
+            var slider = await _informationService.GetByIdAsync((int)id);
 
             if (slider is null) return NotFound();
 
-            return View(new SliderEditVM
+            return View(new InformationEditVM
             {
                 Title = slider.Title,
                 Description = slider.Description,
@@ -99,13 +99,11 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
             });
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, SliderEditVM request)
+        public async Task<IActionResult> Edit(int? id, InformationEditVM request)
         {
             if (id is null) return BadRequest();
 
-            var slider = await _sliderService.GetByIdAsync((int)id);
+            var slider = await _informationService.GetByIdAsync((int)id);
 
             if (slider is null) return NotFound();
 
@@ -124,7 +122,7 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
                     return View(request);
                 }
 
-                if (!request.NewImage.CheckFileSize(500))
+                if (!request.NewImage.CheckFileSize(200))
                 {
                     ModelState.AddModelError("Image", "Image size must be max 200 KB");
                     request.Image = slider.Image;
@@ -132,7 +130,7 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
                 }
             }
 
-            await _sliderService.EditAsync(slider, request);
+            await _informationService.EditAsync(slider, request);
 
             return RedirectToAction(nameof(Index));
         }
@@ -142,11 +140,11 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         {
             if (id is null) return BadRequest();
 
-            var slider = await _sliderService.GetByIdAsync((int)id);
+            var slider = await _informationService.GetByIdAsync((int)id);
 
             if (slider is null) return NotFound();
 
-            return View(new SliderDetailVM
+            return View(new InformationDetailVM
             {
                 Title = slider.Title,
                 Description = slider.Description,
@@ -158,7 +156,7 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
 
         private async Task<int> GetPageCountAsync(int take)
         {
-            int productCount = await _sliderService.GetCountAsync();
+            int productCount = await _informationService.GetCountAsync();
 
             return (int)Math.Ceiling((decimal)productCount / take);
         }

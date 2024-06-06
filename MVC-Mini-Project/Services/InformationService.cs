@@ -3,16 +3,16 @@ using MVC_Mini_Project.Data;
 using MVC_Mini_Project.Helpers.Extensions;
 using MVC_Mini_Project.Models;
 using MVC_Mini_Project.Services.Interfaces;
-using MVC_Mini_Project.ViewModels.Sliders;
+using MVC_Mini_Project.ViewModels.Informations;
 
 namespace MVC_Mini_Project.Services
 {
-    public class SliderService : ISliderService
+    public class InformationService : IInformationService
     {
         private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _env;
 
-        public SliderService(
+        public InformationService(
             AppDbContext context,
             IWebHostEnvironment env)
         {
@@ -20,31 +20,31 @@ namespace MVC_Mini_Project.Services
             _env = env;
         }
 
-        public async Task<IEnumerable<Slider>> GetAllPaginateAsync(int page, int take)
+        public async Task<IEnumerable<Information>> GetAllPaginateAsync(int page, int take)
         {
-            return await _context.Sliders
+            return await _context.Informations
                 .OrderByDescending(m => m.Id)
                 .Skip((page - 1) * take)
                 .Take(take)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Slider>> GetAllAsync()
+        public async Task<IEnumerable<Information>> GetAllAsync()
         {
-            return await _context.Sliders.ToListAsync();
+            return await _context.Informations.ToListAsync();
         }
 
-        public async Task<Slider> GetByIdAsync(int id)
+        public async Task<Information> GetByIdAsync(int id)
         {
-            return await _context.Sliders.FindAsync(id);
+            return await _context.Informations.FindAsync(id);
         }
 
         public async Task<int> GetCountAsync()
         {
-            return await _context.Sliders.CountAsync();
+            return await _context.Informations.CountAsync();
         }
 
-        public async Task CreateAsync(SliderCreateVM data)
+        public async Task CreateAsync(InformationCreateVM data)
         {
             string fileName = $"{Guid.NewGuid()}-{data.Image.FileName}";
 
@@ -52,7 +52,7 @@ namespace MVC_Mini_Project.Services
 
             await data.Image.SaveFileToLocalAsync(path);
 
-            await _context.Sliders.AddAsync(new Slider
+            await _context.Informations.AddAsync(new Information
             {
                 Title = data.Title.Trim(),
                 Description = data.Description.Trim(),
@@ -62,32 +62,32 @@ namespace MVC_Mini_Project.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Slider slider)
+        public async Task DeleteAsync(Information information)
         {
-            string imagePath = _env.GenerateFilePath("img", slider.Image);
+            string imagePath = _env.GenerateFilePath("img", information.Image);
             imagePath.DeleteFileFromLocal();
 
-            _context.Sliders.Remove(slider);
+            _context.Informations.Remove(information);
             await _context.SaveChangesAsync();
         }
 
-        public async Task EditAsync(Slider slider, SliderEditVM data)
+        public async Task EditAsync(Information information, InformationEditVM data)
         {
             if (data.NewImage is not null)
             {
-                string oldPath = _env.GenerateFilePath("img", slider.Image);
+                string oldPath = _env.GenerateFilePath("img", information.Image);
                 oldPath.DeleteFileFromLocal();
 
                 string fileName = $"{Guid.NewGuid()}-{data.NewImage.FileName}";
                 string newPath = _env.GenerateFilePath("img", fileName);
                 await data.NewImage.SaveFileToLocalAsync(newPath);
 
-                slider.Image = fileName;
+                information.Image = fileName;
             }
 
-            slider.Title = data.Title.Trim();
-            slider.Description = data.Description.Trim();
-            slider.UpdatedDate = DateTime.Now;
+            information.Title = data.Title.Trim();
+            information.Description = data.Description.Trim();
+            information.UpdatedDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
         }

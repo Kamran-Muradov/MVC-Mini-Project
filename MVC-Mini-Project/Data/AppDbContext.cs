@@ -8,6 +8,7 @@ namespace MVC_Mini_Project.Data
     public class AppDbContext : IdentityDbContext<AppUser>
     {
         public DbSet<Slider> Sliders { get; set; }
+        public DbSet<Information> Informations { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 

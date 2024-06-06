@@ -1,24 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MVC_Mini_Project.Models;
 using MVC_Mini_Project.Services.Interfaces;
 
 namespace MVC_Mini_Project.ViewComponents
 {
-    public class SliderViewComponent : ViewComponent
+    public class InformationViewComponent : ViewComponent
     {
-        private readonly ISliderService _sliderService;
+        private readonly IInformationService _informationService;
 
-        public SliderViewComponent(ISliderService sliderService)
+        public InformationViewComponent(IInformationService informationService)
         {
-            _sliderService = sliderService;
+            _informationService = informationService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
 
-            var sliders = await _sliderService.GetAllAsync();
+            var sliders = await _informationService.GetAllAsync();
 
-            var response = sliders.Select(m => new SliderVMVC
+            var response = sliders.Select(m => new InformationVMVC
             {
                 Title = m.Title,
                 Description = m.Description,
@@ -29,7 +28,7 @@ namespace MVC_Mini_Project.ViewComponents
         }
     }
 
-    public class SliderVMVC
+    public class InformationVMVC
     {
         public string Title { get; set; }
         public string Description { get; set; }
