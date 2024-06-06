@@ -256,6 +256,26 @@ namespace MVC_Mini_Project.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sliders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2024, 6, 6, 9, 27, 37, 10, DateTimeKind.Local).AddTicks(6144),
+                            Description = "Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea sanctus eirmod elitr.",
+                            Image = "carousel-1.jpg",
+                            SoftDeleted = false,
+                            Title = "The Best Online Learning Platform"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2024, 6, 6, 9, 27, 37, 10, DateTimeKind.Local).AddTicks(6146),
+                            Description = "Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea sanctus eirmod elitr.",
+                            Image = "carousel-2.jpg",
+                            SoftDeleted = false,
+                            Title = "Get Educated Online From Your Home"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

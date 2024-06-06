@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using MVC_Mini_Project.Data;
 using MVC_Mini_Project.Models;
+using MVC_Mini_Project.Services;
+using MVC_Mini_Project.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,8 @@ builder.Services.Configure<IdentityOptions>(opt =>
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
+builder.Services.AddScoped<ISliderService, SliderService>();
 
 var app = builder.Build();
 

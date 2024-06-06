@@ -1,0 +1,33 @@
+﻿@model SliderDetailVM
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<div class="card m-auto w-75">
+    <div class="card-body">
+        <h4 class="card-title">Slider Detailed View</h4>
+        <div class="d-flex">
+          
+        </div>
+        <div class="mt-5 ">
+            <div class="image mb-5">
+                <img src="~/img/@Model.Image"  alt="" />
+            </div>
+            <div class="mb-0 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Title: </strong>@Model.Title</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Description: </strong>@Model.Description</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Create date: </strong>@Model.CreatedDate</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Update date: </strong>@Model.UpdatedDate</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
