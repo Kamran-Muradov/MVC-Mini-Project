@@ -10,6 +10,7 @@ namespace MVC_Mini_Project.Data
         public DbSet<Information> Informations { get; set; }
         public DbSet<InformationIcon> InformationIcons { get; set; }
         public DbSet<About> Abouts { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -18,6 +19,7 @@ namespace MVC_Mini_Project.Data
             builder.Entity<Slider>().HasQueryFilter(m => !m.SoftDeleted);
             builder.Entity<Information>().HasQueryFilter(m => !m.SoftDeleted);
             builder.Entity<About>().HasQueryFilter(m => !m.SoftDeleted);
+            builder.Entity<Category>().HasQueryFilter(m => !m.SoftDeleted);
 
             builder.Entity<Slider>().HasData(
                 new Slider

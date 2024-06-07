@@ -66,11 +66,11 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         {
             if (id is null) return BadRequest();
 
-            var category = await _aboutService.GetByIdAsync((int)id);
+            var about = await _aboutService.GetByIdAsync((int)id);
 
-            if (category is null) return NotFound();
+            if (about is null) return NotFound();
 
-            await _aboutService.DeleteAsync(category);
+            await _aboutService.DeleteAsync(about);
 
             return RedirectToAction(nameof(Index));
         }
@@ -80,15 +80,15 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         {
             if (id is null) return BadRequest();
 
-            var slider = await _aboutService.GetByIdAsync((int)id);
+            var about = await _aboutService.GetByIdAsync((int)id);
 
-            if (slider is null) return NotFound();
+            if (about is null) return NotFound();
 
             return View(new AboutEditVM
             {
-                Title = slider.Title,
-                Description = slider.Description,
-                Image = slider.Image
+                Title = about.Title,
+                Description = about.Description,
+                Image = about.Image
             });
         }
 
@@ -98,13 +98,13 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         {
             if (id is null) return BadRequest();
 
-            var slider = await _aboutService.GetByIdAsync((int)id);
+            var about = await _aboutService.GetByIdAsync((int)id);
 
-            if (slider is null) return NotFound();
+            if (about is null) return NotFound();
 
             if (!ModelState.IsValid)
             {
-                request.Image = slider.Image;
+                request.Image = about.Image;
                 return View(request);
             }
 
@@ -113,19 +113,19 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
                 if (!request.NewImage.CheckFileType("image/"))
                 {
                     ModelState.AddModelError("Image", "Input can accept only image format");
-                    request.Image = slider.Image;
+                    request.Image = about.Image;
                     return View(request);
                 }
 
                 if (!request.NewImage.CheckFileSize(500))
                 {
                     ModelState.AddModelError("Image", "Image size must be max 200 KB");
-                    request.Image = slider.Image;
+                    request.Image = about.Image;
                     return View(request);
                 }
             }
 
-            await _aboutService.EditAsync(slider, request);
+            await _aboutService.EditAsync(about, request);
 
             return RedirectToAction(nameof(Index));
         }
@@ -135,17 +135,17 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         {
             if (id is null) return BadRequest();
 
-            var slider = await _aboutService.GetByIdAsync((int)id);
+            var about = await _aboutService.GetByIdAsync((int)id);
 
-            if (slider is null) return NotFound();
+            if (about is null) return NotFound();
 
             return View(new AboutDetailVM
             {
-                Title = slider.Title,
-                Description = slider.Description,
-                Image = slider.Image,
-                CreatedDate = slider.CreatedDate.ToString("MM.dd.yyyy"),
-                UpdatedDate = slider.UpdatedDate != null ? slider.UpdatedDate.Value.ToString("MM.dd.yyyy") : "N/A"
+                Title = about.Title,
+                Description = about.Description,
+                Image = about.Image,
+                CreatedDate = about.CreatedDate.ToString("MM.dd.yyyy"),
+                UpdatedDate = about.UpdatedDate != null ? about.UpdatedDate.Value.ToString("MM.dd.yyyy") : "N/A"
             });
         }
     }

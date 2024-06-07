@@ -41,4 +41,18 @@ $(function () {
         })
     })
 
+      $(document).on("click", "#category-area .delete-btn", function () {
+        let id = parseInt($(this).attr("data-id"));
+
+        $(document).on("click", "#category-area .yes-btn", function () {
+            $.ajax({
+                type: "POST",
+                url: `/admin/category/delete?id=${id}`,
+                success: function () {
+                    window.location.reload();
+                }
+            });
+        })
+    })
+
 })

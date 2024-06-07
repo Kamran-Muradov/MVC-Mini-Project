@@ -73,11 +73,11 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         {
             if (id is null) return BadRequest();
 
-            var category = await _sliderService.GetByIdAsync((int)id);
+            var slider = await _sliderService.GetByIdAsync((int)id);
 
-            if (category is null) return NotFound();
+            if (slider is null) return NotFound();
 
-            await _sliderService.DeleteAsync(category);
+            await _sliderService.DeleteAsync(slider);
 
             return RedirectToAction(nameof(Index));
         }
@@ -158,9 +158,9 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
 
         private async Task<int> GetPageCountAsync(int take)
         {
-            int productCount = await _sliderService.GetCountAsync();
+            int sliderCount = await _sliderService.GetCountAsync();
 
-            return (int)Math.Ceiling((decimal)productCount / take);
+            return (int)Math.Ceiling((decimal)sliderCount / take);
         }
     }
 }
