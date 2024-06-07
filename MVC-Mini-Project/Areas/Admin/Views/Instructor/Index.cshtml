@@ -1,0 +1,103 @@
+﻿@model Paginate<InstructorVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="page-header d-print-none mb-5">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+                <!-- Page pre-title -->
+                <h2 class="page-title">
+                    Instructors
+                </h2>
+            </div>
+            <!-- Page title actions -->
+            <div class="col-auto ms-auto d-print-none">
+                <div class="btn-list">
+                    <a asp-action="Create" class="btn btn-primary d-none d-sm-inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                        Create new instructor
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section id="instructor-area">
+    <div class="card">
+        <div class="card-body">
+            <div id="table-default" class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th><button class="table-sort" data-sort="sort-name">Full name</button></th>
+                            <th><button class="table-sort" data-sort="sort-name">Field</button></th>
+                            <th>Operations</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-tbody">
+                        @foreach (var item in Model.Datas)
+                        {
+                            <tr>
+                                <td class="sort-name"><img src="~/img/@item.Image" style="width:90px" /></td>
+                                <td class="sort-name">@item.FullName</td>
+                                <td class="sort-name">@item.Field</td>
+                                <td>
+                                    <a class="btn btn-info btn-icon" asp-action="Detail" asp-route-id="@item.Id">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-info-circle"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /><path d="M12 9h.01" /><path d="M11 12h1v4h1" /></svg>
+                                    </a>
+                                    <a class="btn btn-warning btn-icon" asp-action="Edit" asp-route-id="@item.Id">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-pencil"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
+                                    </a>
+                                    <a class="btn btn-danger btn-icon delete-btn" data-id="@item.Id" data-bs-toggle="modal" data-bs-target="#modal-small">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                                    </a>
+                                    <a class="btn btn-primary" asp-action="AddSocial" asp-route-id="@item.Id">Add Social</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-blur fade" id="modal-small" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-title">Are you sure?</div>
+                    <div>If you proceed, you will delete data permanently.</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger yes-btn" data-id="0" data-bs-dismiss="modal">Yes, delete this instructor</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="pagination-area d-flex justify-content-center mt-3">
+    <nav aria-label="...">
+        <ul class="pagination">
+            <li class="page-item @(Model.HasPrevious ? "" : "disabled")">
+                <a class="page-link" asp-action="Index" asp-route-page="@(Model.CurrentPage - 1)" tabindex="-1">Previous</a>
+            </li>
+            @for (int i = 1; i <= @Model.TotalPage; i++)
+            {
+                <li class="page-item @(Model.CurrentPage == i ? "disabled" : "")"><a class="page-link @(Model.CurrentPage == i ? "paginate-active" : "")" asp-action="Index" asp-route-page="@i">@i</a></li>
+            }
+            <li class="page-item @(Model.HasNext ? "" : "disabled")">
+                <a class="page-link" asp-action="Index" asp-route-page="@(Model.CurrentPage + 1)">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+
+@section js {
+    <script src="~/admin/dist/js/delete.js"></script>
+}
+

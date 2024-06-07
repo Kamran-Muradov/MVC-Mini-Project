@@ -11,6 +11,9 @@ namespace MVC_Mini_Project.Data
         public DbSet<InformationIcon> InformationIcons { get; set; }
         public DbSet<About> Abouts { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Instructor> Instructors { get; set; }
+        public DbSet<Social> Socials { get; set; }
+        public DbSet<InstructorSocial> InstructorSocials { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
