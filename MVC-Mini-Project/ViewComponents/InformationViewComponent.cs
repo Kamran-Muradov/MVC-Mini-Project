@@ -15,13 +15,13 @@ namespace MVC_Mini_Project.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
 
-            var sliders = await _informationService.GetAllAsync();
+            var informations = await _informationService.GetAllWithIconAsync();
 
-            var response = sliders.Select(m => new InformationVMVC
+            var response = informations.Select(m => new InformationVMVC
             {
                 Title = m.Title,
                 Description = m.Description,
-                Image = m.Image
+                Icon = m.InformationIcon.Name
             });
 
             return await Task.FromResult(View(response));
@@ -32,6 +32,6 @@ namespace MVC_Mini_Project.ViewComponents
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public string Image { get; set; }
+        public string Icon { get; set; }
     }
 }

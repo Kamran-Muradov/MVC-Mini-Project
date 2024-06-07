@@ -4,6 +4,7 @@ using MVC_Mini_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC_Mini_Project.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240606194033_CreatedAboutTable")]
+    partial class CreatedAboutTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -168,7 +170,8 @@ namespace MVC_Mini_Project.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
@@ -270,10 +273,11 @@ namespace MVC_Mini_Project.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("InformationIconId")
-                        .HasColumnType("int");
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("SoftDeleted")
                         .HasColumnType("bit");
@@ -288,25 +292,7 @@ namespace MVC_Mini_Project.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InformationIconId");
-
                     b.ToTable("Informations");
-                });
-
-            modelBuilder.Entity("MVC_Mini_Project.Models.InformationIcon", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("InformationIcons");
                 });
 
             modelBuilder.Entity("MVC_Mini_Project.Models.Slider", b =>
@@ -322,7 +308,8 @@ namespace MVC_Mini_Project.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
@@ -346,7 +333,7 @@ namespace MVC_Mini_Project.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 6, 7, 1, 46, 16, 229, DateTimeKind.Local).AddTicks(4078),
+                            CreatedDate = new DateTime(2024, 6, 6, 23, 40, 33, 490, DateTimeKind.Local).AddTicks(6819),
                             Description = "Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea sanctus eirmod elitr.",
                             Image = "carousel-1.jpg",
                             SoftDeleted = false,
@@ -355,7 +342,7 @@ namespace MVC_Mini_Project.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 6, 7, 1, 46, 16, 229, DateTimeKind.Local).AddTicks(4080),
+                            CreatedDate = new DateTime(2024, 6, 6, 23, 40, 33, 490, DateTimeKind.Local).AddTicks(6821),
                             Description = "Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea sanctus eirmod elitr.",
                             Image = "carousel-2.jpg",
                             SoftDeleted = false,
@@ -412,17 +399,6 @@ namespace MVC_Mini_Project.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("MVC_Mini_Project.Models.Information", b =>
-                {
-                    b.HasOne("MVC_Mini_Project.Models.InformationIcon", "InformationIcon")
-                        .WithMany()
-                        .HasForeignKey("InformationIconId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("InformationIcon");
                 });
 #pragma warning restore 612, 618
         }

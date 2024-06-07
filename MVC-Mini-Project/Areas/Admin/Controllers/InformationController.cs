@@ -10,23 +10,27 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
     public class InformationController : Controller
     {
         private readonly IInformationService _informationService;
+        private readonly IInformationIconService _informationIconService;
 
-        public InformationController(IInformationService informationService)
+        public InformationController(
+            IInformationService informationService,
+            IInformationIconService informationIconService)
         {
             _informationService = informationService;
+            _informationIconService = informationIconService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index(int page = 1)
         {
-            var sliders = await _informationService.GetAllPaginateAsync(page, 3);
+            var informations = await _informationService.GetAllPaginateAsync(page, 3);
 
-            var mappedDatas = sliders.Select(m => new InformationVM
+            var mappedDatas = informations.Select(m => new InformationVM
             {
                 Id = m.Id,
                 Title = m.Title,
+                Icon = m.InformationIcon.Name,
                 CreatedDate = m.CreatedDate.ToString("MM.dd.yyyy"),
-                Image = m.Image
             });
 
             int totalPageCount = await GetPageCountAsync(3);
@@ -37,8 +41,16 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var icons = await _informationIconService.GetAllAsync();
+
+            ViewBag.icons = icons.Select(m => new InformationIconVM
+            {
+                Id = m.Id,
+                Class = m.Name
+            });
+
             return View();
         }
 
@@ -48,18 +60,29 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
+                var icons = await _informationIconService.GetAllAsync();
+
+                ViewBag.icons = icons.Select(m => new InformationIconVM
+                {
+                    Id = m.Id,
+                    Class = m.Name
+                });
+
                 return View();
             }
 
-            if (!request.Image.CheckFileType("image/"))
+            if (await _informationService.ExistAsync(request.Title))
             {
-                ModelState.AddModelError("Image", "Input can accept only image format");
-                return View();
-            }
+                ModelState.AddModelError("Title", "Information with this title already exists");
 
-            if (!request.Image.CheckFileSize(200))
-            {
-                ModelState.AddModelError("Image", "Image size must be max 200 KB");
+                var icons = await _informationIconService.GetAllAsync();
+
+                ViewBag.icons = icons.Select(m => new InformationIconVM
+                {
+                    Id = m.Id,
+                    Class = m.Name
+                });
+
                 return View();
             }
 
@@ -73,11 +96,11 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         {
             if (id is null) return BadRequest();
 
-            var category = await _informationService.GetByIdAsync((int)id);
+            var information = await _informationService.GetByIdAsync((int)id);
 
-            if (category is null) return NotFound();
+            if (information is null) return NotFound();
 
-            await _informationService.DeleteAsync(category);
+            await _informationService.DeleteAsync(information);
 
             return RedirectToAction(nameof(Index));
         }
@@ -87,15 +110,23 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         {
             if (id is null) return BadRequest();
 
-            var slider = await _informationService.GetByIdAsync((int)id);
+            var information = await _informationService.GetByIdWithIconAsync((int)id);
 
-            if (slider is null) return NotFound();
+            if (information is null) return NotFound();
+
+            var icons = await _informationIconService.GetAllAsync();
+
+            ViewBag.icons = icons.Select(m => new InformationIconVM
+            {
+                Id = m.Id,
+                Class = m.Name
+            });
 
             return View(new InformationEditVM
             {
-                Title = slider.Title,
-                Description = slider.Description,
-                Image = slider.Image
+                Title = information.Title,
+                Description = information.Description,
+                InformationIconId = information.InformationIconId
             });
         }
 
@@ -103,34 +134,43 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         {
             if (id is null) return BadRequest();
 
-            var slider = await _informationService.GetByIdAsync((int)id);
+            var information = await _informationService.GetByIdWithIconAsync((int)id);
 
-            if (slider is null) return NotFound();
+            if (information is null) return NotFound();
 
             if (!ModelState.IsValid)
             {
-                request.Image = slider.Image;
+                var icons = await _informationIconService.GetAllAsync();
+
+                ViewBag.icons = icons.Select(m => new InformationIconVM
+                {
+                    Id = m.Id,
+                    Class = m.Name
+                });
+
+                request.InformationIconId = information.InformationIconId;
+
                 return View(request);
             }
 
-            if (request.NewImage is not null)
+            if (request.Title.Trim().ToLower() != information.Title.Trim().ToLower() && await _informationService.ExistAsync(request.Title))
             {
-                if (!request.NewImage.CheckFileType("image/"))
-                {
-                    ModelState.AddModelError("Image", "Input can accept only image format");
-                    request.Image = slider.Image;
-                    return View(request);
-                }
+                var icons = await _informationIconService.GetAllAsync();
 
-                if (!request.NewImage.CheckFileSize(200))
+                ViewBag.icons = icons.Select(m => new InformationIconVM
                 {
-                    ModelState.AddModelError("Image", "Image size must be max 200 KB");
-                    request.Image = slider.Image;
-                    return View(request);
-                }
+                    Id = m.Id,
+                    Class = m.Name
+                });
+
+                ModelState.AddModelError("Title", "Information with this title already exists");
+
+                request.InformationIconId = information.InformationIconId;
+
+                return View(request);
             }
 
-            await _informationService.EditAsync(slider, request);
+            await _informationService.EditAsync(information, request);
 
             return RedirectToAction(nameof(Index));
         }
@@ -140,25 +180,25 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         {
             if (id is null) return BadRequest();
 
-            var slider = await _informationService.GetByIdAsync((int)id);
+            var information = await _informationService.GetByIdWithIconAsync((int)id);
 
-            if (slider is null) return NotFound();
+            if (information is null) return NotFound();
 
             return View(new InformationDetailVM
             {
-                Title = slider.Title,
-                Description = slider.Description,
-                Image = slider.Image,
-                CreatedDate = slider.CreatedDate.ToString("MM.dd.yyyy"),
-                UpdatedDate = slider.UpdatedDate != null ? slider.UpdatedDate.Value.ToString("MM.dd.yyyy") : "N/A"
+                Title = information.Title,
+                Description = information.Description,
+                Icon = information.InformationIcon.Name,
+                CreatedDate = information.CreatedDate.ToString("MM.dd.yyyy"),
+                UpdatedDate = information.UpdatedDate != null ? information.UpdatedDate.Value.ToString("MM.dd.yyyy") : "N/A"
             });
         }
 
         private async Task<int> GetPageCountAsync(int take)
         {
-            int productCount = await _informationService.GetCountAsync();
+            int informationCount = await _informationService.GetCountAsync();
 
-            return (int)Math.Ceiling((decimal)productCount / take);
+            return (int)Math.Ceiling((decimal)informationCount / take);
         }
     }
 }

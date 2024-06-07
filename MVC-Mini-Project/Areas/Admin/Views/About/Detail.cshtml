@@ -1,4 +1,4 @@
-﻿@model InformationDetailVM
+﻿@model AboutDetailVM
 
 @{
     ViewData["Title"] = "Detail";
@@ -6,13 +6,12 @@
 
 <div class="card m-auto w-75">
     <div class="card-body">
-        <h4 class="card-title">Information Detailed View</h4>
+        <h4 class="card-title">About Detailed View</h4>
         <div class="d-flex">
-
         </div>
         <div class="mt-5 ">
             <div class="image mb-5">
-                <i class="@Model.Icon"></i>
+                <img src="~/img/@Model.Image" alt="" />
             </div>
             <div class="mb-0 flex-grow d-flex">
                 <p class="mb-0 font-weight-light"><strong>Title: </strong>@Model.Title</p>
@@ -29,4 +28,5 @@
         </div>
     </div>
 </div>
+
 

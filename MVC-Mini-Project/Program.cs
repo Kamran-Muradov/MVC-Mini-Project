@@ -31,6 +31,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<ISliderService, SliderService>();
 builder.Services.AddScoped<IInformationService, InformationService>();
+builder.Services.AddScoped<IInformationIconService, InformationIconService>();
+builder.Services.AddScoped<IAboutService, AboutService>();
 
 var app = builder.Build();
 

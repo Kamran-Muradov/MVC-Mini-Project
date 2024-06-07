@@ -10,7 +10,6 @@ namespace MVC_Mini_Project.ViewModels.Informations
         public string Title { get; set; }
         [Required]
         public string Description { get; set; }
-        [Required]
-        public IFormFile Image { get; set; }
+        public int InformationIconId { get; set; }
     }
 }

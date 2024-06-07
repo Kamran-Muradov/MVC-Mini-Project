@@ -1,4 +1,4 @@
-﻿@model InformationEditVM
+﻿@model AboutEditVM
 
 @{
     ViewData["Title"] = "Edit";
@@ -18,17 +18,14 @@
         <textarea asp-for="Description" class="form-control" rows="8"></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
-    <p class="form-label">Choose Icon</p>
-    @foreach (var icon in (IEnumerable<InformationIconVM>)ViewBag.icons)
-    {
-        <label class="form-check-inline mb-3">
-            <input asp-for="InformationIconId" class="form-check-input" value="@icon.Id" type="radio" checked=@(icon.Id == Model.InformationIconId)>
-            <i class="form-check-label @icon.Class" style="font-size:25px"></i>
-        </label>
-    }
-    <div>
-        <button type="submit" class="btn btn-primary me-2 mt-3">Submit</button>
-        <a class="btn btn-light mt-3" asp-action="Index">Cancel</a>
+    <div class="image mb-5">
+        <img src="~/img/@Model.Image" style="width:400px;height:300px" alt="" />
     </div>
+    <div class="form-group mb-3">
+        <label>Upload New image</label>
+        <input asp-for="NewImage" accept="image/*" class="form-control">
+        <span asp-validation-for="NewImage" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary me-2 mt-3">Submit</button>
+    <a class="btn btn-light mt-3" asp-action="Index">Cancel</a>
 </form>
-
