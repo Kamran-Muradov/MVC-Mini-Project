@@ -4,6 +4,7 @@ using MVC_Mini_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC_Mini_Project.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240608064813_CreatedCourseStudentPivotTables")]
+    partial class CreatedCourseStudentPivotTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -338,7 +340,7 @@ namespace MVC_Mini_Project.Migrations
                     b.ToTable("Courses");
                 });
 
-            modelBuilder.Entity("MVC_Mini_Project.Models.CourseImage", b =>
+            modelBuilder.Entity("MVC_Mini_Project.Models.CourseImages", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -540,7 +542,7 @@ namespace MVC_Mini_Project.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 6, 8, 11, 19, 37, 146, DateTimeKind.Local).AddTicks(2408),
+                            CreatedDate = new DateTime(2024, 6, 8, 10, 48, 13, 581, DateTimeKind.Local).AddTicks(1071),
                             Description = "Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea sanctus eirmod elitr.",
                             Image = "carousel-1.jpg",
                             SoftDeleted = false,
@@ -549,7 +551,7 @@ namespace MVC_Mini_Project.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 6, 8, 11, 19, 37, 146, DateTimeKind.Local).AddTicks(2409),
+                            CreatedDate = new DateTime(2024, 6, 8, 10, 48, 13, 581, DateTimeKind.Local).AddTicks(1073),
                             Description = "Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea sanctus eirmod elitr.",
                             Image = "carousel-2.jpg",
                             SoftDeleted = false,
@@ -698,7 +700,7 @@ namespace MVC_Mini_Project.Migrations
                     b.Navigation("Instructor");
                 });
 
-            modelBuilder.Entity("MVC_Mini_Project.Models.CourseImage", b =>
+            modelBuilder.Entity("MVC_Mini_Project.Models.CourseImages", b =>
                 {
                     b.HasOne("MVC_Mini_Project.Models.Course", "Course")
                         .WithMany("CourseImages")

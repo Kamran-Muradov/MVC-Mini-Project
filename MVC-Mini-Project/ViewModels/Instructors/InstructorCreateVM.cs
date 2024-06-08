@@ -6,6 +6,7 @@ namespace MVC_Mini_Project.ViewModels.Instructors
     {
         [Required]
         [StringLength(100)]
+        [RegularExpression(@"^(?i)[a-z]+[\ -].*[a-z]$", ErrorMessage = "Full name format is wrong")]
         public string FullName { get; set; }
         [Required]
         [EmailAddress(ErrorMessage = "Email is invalid")]
@@ -15,6 +16,7 @@ namespace MVC_Mini_Project.ViewModels.Instructors
         public string Address { get; set; }
         [Required]
         [StringLength(100)]
+        [Phone(ErrorMessage = "Invalid phone number")]
         public string Phone { get; set; }
         [Required]
         [StringLength(100)]

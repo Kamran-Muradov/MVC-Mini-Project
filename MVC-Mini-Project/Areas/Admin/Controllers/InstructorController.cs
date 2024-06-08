@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVC_Mini_Project.Helpers;
 using MVC_Mini_Project.Helpers.Extensions;
-using MVC_Mini_Project.Models;
 using MVC_Mini_Project.Services.Interfaces;
 using MVC_Mini_Project.ViewModels.Instructors;
 
@@ -113,9 +112,18 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         {
             if (id is null) return BadRequest();
 
-            var instructor = await _instructorService.GetByIdAsync((int)id);
+            var instructor = await _instructorService.GetByIdWithSocialsAsync((int)id);
 
             if (instructor is null) return NotFound();
+
+            request.InstructorSocials = instructor.InstructorSocials.Select(m => new InstructorSocialVM
+                {
+                    InstructorId = instructor.Id,
+                    SocialId = m.SocialId,
+                    Icon = m.Social.Icon,
+                    Link = m.Link
+                })
+                .ToList();
 
             if (!ModelState.IsValid)
             {

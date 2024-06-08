@@ -1,0 +1,59 @@
+﻿@model CourseDetailVM
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<div class="card m-auto w-75">
+    <div class="card-body">
+        <h4 class="card-title">Course Detailed View</h4>
+        <div class="d-flex">
+        </div>
+        <div class="mt-5 ">
+            <div class="row mt-3">
+                @foreach (var item in Model.Images)
+                {
+                    <div class="col-3 pr-1">
+                        <img src="~/img/@item.Name" class="mb-2 mw-100 w-100 rounded"
+                             alt="image"
+                             style=" height:200px;@(item.IsMain ? "border: 3px solid darkorchid;" : "")" />
+                    </div>
+                }
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Name: </strong>@Model.Name</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Description: </strong>@Model.Description</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Price: </strong>$ @Model.Price</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Category: </strong>@Model.Category</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Instructor: </strong>@Model.Instructor</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Start date: </strong>@Model.StartDate</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>End date: </strong>@Model.EndDate</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Rating: </strong>@Model.Rating</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Student count: </strong>@Model.StudentCount</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Create date: </strong>@Model.CreatedDate</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Update date: </strong>@Model.UpdatedDate</p>
+            </div>
+        </div>
+    </div>
+</div>
+

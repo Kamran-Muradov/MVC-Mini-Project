@@ -4,6 +4,5 @@
     {
         public string Name { get; set; }
         public string Icon { get; set; }
-        public List<InstructorSocial> InstructorSocials { get; set; }
     }
 }

@@ -159,8 +159,8 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
                 CreatedDate = category.CreatedDate.ToString("MM.dd.yyyy"),
                 UpdatedDate = category.UpdatedDate != null ? category.UpdatedDate.Value.ToString("MM.dd.yyyy") : "N/A",
                 Image = category.Image,
-                //CourseCount = category.Courses.Count,
-                //Courses = category.Courses.Select(m => m.Name).ToList()
+                CourseCount = category.Courses.Count,
+                Courses = category.Courses.Select(m => m.Name).ToList()
             });
         }
 

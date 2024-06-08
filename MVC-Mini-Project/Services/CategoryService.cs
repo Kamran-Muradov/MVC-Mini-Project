@@ -24,7 +24,7 @@ namespace MVC_Mini_Project.Services
         public async Task<IEnumerable<Category>> GetAllWithCoursesAsync()
         {
             return await _context.Categories
-                //.Include(m => m.Courses)
+                .Include(m => m.Courses)
                 .ToListAsync();
         }
 
@@ -37,7 +37,7 @@ namespace MVC_Mini_Project.Services
         {
             return await _context.Categories
                 .Where(m => m.Id == id)
-                //.Include(m => m.Courses)
+                .Include(m => m.Courses)
                 .FirstOrDefaultAsync();
         }
 
@@ -55,7 +55,7 @@ namespace MVC_Mini_Project.Services
                 Id = m.Id,
                 Name = m.Name,
                 CreatedDate = m.CreatedDate.ToString("MM.dd.yyyy"),
-                //CourseCount = m.Courses.Count
+                CourseCount = m.Courses.Count
             });
         }
 
@@ -65,7 +65,7 @@ namespace MVC_Mini_Project.Services
                 .OrderByDescending(m => m.Id)
                 .Skip((page - 1) * take)
                 .Take(take)
-                //.Include(m => m.Courses)
+                .Include(m => m.Courses)
                 .ToListAsync();
         }
 

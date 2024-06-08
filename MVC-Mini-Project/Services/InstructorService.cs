@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MVC_Mini_Project.Data;
 using MVC_Mini_Project.Helpers.Extensions;
 using MVC_Mini_Project.Models;
@@ -66,7 +67,7 @@ namespace MVC_Mini_Project.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Instructor instructor)
+         public async Task DeleteAsync(Instructor instructor)
         {
             string imagePath = _env.GenerateFilePath("img", instructor.Image);
             imagePath.DeleteFileFromLocal();
@@ -96,6 +97,21 @@ namespace MVC_Mini_Project.Services
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Instructor>> GetAllWithSocialsAsync()
+        {
+            return await _context.Instructors
+                .Include(m => m.InstructorSocials)
+                .ThenInclude(m => m.Social)
+                .ToListAsync();
+        }
+
+        public async Task<SelectList> GetAllSelectedAsync()
+        {
+            var instructors = await _context.Instructors.ToListAsync();
+
+            return new SelectList(instructors, "Id", "FullName");
+        }
+
         public async Task<Instructor> GetByIdAsync(int id)
         {
             return await _context.Instructors.FindAsync(id);
@@ -113,7 +129,7 @@ namespace MVC_Mini_Project.Services
         public async Task DeleteSocialAsync(InstructorSocialDeleteVM data)
         {
             var social = await _context.InstructorSocials
-                .FirstOrDefaultAsync(m => m.SocialId == data.SocialId && 
+                .FirstOrDefaultAsync(m => m.SocialId == data.SocialId &&
                                      m.InstructorId == data.InstructorId &&
                                      m.Link == data.Link);
 

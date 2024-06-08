@@ -1,4 +1,5 @@
-﻿using MVC_Mini_Project.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using MVC_Mini_Project.Models;
 using MVC_Mini_Project.ViewModels.Instructors;
 
 namespace MVC_Mini_Project.Services.Interfaces
@@ -10,6 +11,8 @@ namespace MVC_Mini_Project.Services.Interfaces
         Task DeleteAsync(Instructor instructor);
         Task AddSocialAsync(int id, InstructorAddSocialVM data);
         Task<IEnumerable<Instructor>> GetAllPaginateAsync(int page, int take);
+        Task<IEnumerable<Instructor>> GetAllWithSocialsAsync();
+        Task<SelectList> GetAllSelectedAsync();
         Task<Instructor> GetByIdAsync(int id);
         Task<Instructor> GetByIdWithSocialsAsync(int id);
         Task DeleteSocialAsync(InstructorSocialDeleteVM data);

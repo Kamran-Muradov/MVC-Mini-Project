@@ -86,4 +86,19 @@ $(function () {
         })
     })
 
+     $(document).on("click", "#course-area .delete-btn", function () {
+        let id = parseInt($(this).attr("data-id"));
+        console.log(id);
+
+        $(document).on("click", "#course-area .yes-btn", function () {
+            $.ajax({
+                type: "POST",
+                url: `/admin/course/delete?id=${id}`,
+                success: function () {
+                    window.location.reload();
+                }
+            });
+        })
+    })
+
 })
