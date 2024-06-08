@@ -55,7 +55,7 @@ $(function () {
         })
     })
 
-    $(document).on("click", "#instructor-edit-area .delete-social", function () {
+    $(document).on("click", "#instructor-edit-area .delete-social", function () { 
         let instructorId = parseInt($(this).attr("data-instructorId"));
         let socialId = parseInt($(this).attr("data-socialId"));
         let link = $(this).attr("data-link");

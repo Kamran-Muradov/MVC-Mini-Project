@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MVC_Mini_Project.Models;
+using System.IO;
 
 namespace MVC_Mini_Project.Data
 {
@@ -18,6 +19,7 @@ namespace MVC_Mini_Project.Data
         public DbSet<CourseImage> CourseImages { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<CourseStudent> CourseStudents { get; set; }
+        public DbSet<Setting> Settings { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -26,7 +28,11 @@ namespace MVC_Mini_Project.Data
             builder.Entity<Slider>().HasQueryFilter(m => !m.SoftDeleted);
             builder.Entity<Information>().HasQueryFilter(m => !m.SoftDeleted);
             builder.Entity<About>().HasQueryFilter(m => !m.SoftDeleted);
-            builder.Entity<Category>().HasQueryFilter(m => !m.SoftDeleted);
+            builder.Entity<Instructor>().HasQueryFilter(m => !m.SoftDeleted);
+            builder.Entity<Social>().HasQueryFilter(m => !m.SoftDeleted);
+            builder.Entity<Course>().HasQueryFilter(m => !m.SoftDeleted);
+            builder.Entity<Student>().HasQueryFilter(m => !m.SoftDeleted);
+            builder.Entity<Setting>().HasQueryFilter(m => !m.SoftDeleted);
 
             builder.Entity<Slider>().HasData(
                 new Slider
@@ -48,6 +54,41 @@ namespace MVC_Mini_Project.Data
                     SoftDeleted = false,
                 }
                 );
+
+            builder.Entity<Setting>().HasData(
+                new Setting
+                {
+                    Id = 1,
+                    Key = "Location",
+                    Value = "123 Street, New York, USA",
+                    CreatedDate = DateTime.Now,
+                    SoftDeleted = false,
+                },
+                new Setting
+                {
+                    Id = 2,
+                    Key = "Phone",
+                    Value = "+012 345 67890",
+                    CreatedDate = DateTime.Now,
+                    SoftDeleted = false,
+                },
+                new Setting
+                {
+                    Id = 3,
+                    Key = "Email",
+                    Value = "info@example.com",
+                    CreatedDate = DateTime.Now,
+                    SoftDeleted = false,
+                },
+                new Setting
+                {
+                    Id = 4,
+                    Key = "Logo",
+                    Value = "fa fa-book me-3",
+                    CreatedDate = DateTime.Now,
+                    SoftDeleted = false,
+                }
+            );
 
             base.OnModelCreating(builder);
         }
