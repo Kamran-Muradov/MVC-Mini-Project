@@ -1,4 +1,5 @@
-﻿using MVC_Mini_Project.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using MVC_Mini_Project.Models;
 using MVC_Mini_Project.ViewModels.Courses;
 
 namespace MVC_Mini_Project.Services.Interfaces
@@ -10,6 +11,8 @@ namespace MVC_Mini_Project.Services.Interfaces
         Task EditAsync(Course course,CourseEditVM data);
         Task<IEnumerable<Course>> GetAllPaginateAsync(int page, int take);
         Task<IEnumerable<Course>> GetAllPopularAsync();
+        Task<SelectList> GetAllSelectedActiveAsync();
+        Task<SelectList> GetAllSelectedAvailableAsync(int studentId);
         IEnumerable<CourseVM> GetMappedDatas(IEnumerable<Course> courses);
         Task<Course> GetByIdAsync(int id);
         Task<Course> GetByIdWithImagesAsync(int id);

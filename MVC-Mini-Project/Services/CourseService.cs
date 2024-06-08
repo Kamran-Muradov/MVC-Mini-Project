@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MVC_Mini_Project.Data;
 using MVC_Mini_Project.Helpers.Extensions;
 using MVC_Mini_Project.Models;
@@ -113,7 +114,32 @@ namespace MVC_Mini_Project.Services
                 .OrderByDescending(m => m.Rating)
                 .Include(m => m.CourseImages)
                 .Include(m => m.Instructor)
+                .Include(m => m.CourseStudents)
                 .ToListAsync();
+        }
+
+        public async Task<SelectList> GetAllSelectedActiveAsync()
+        {
+            var courses = await _context.Courses
+                .Where(m => m.EndDate > DateTime.Now)
+                .ToListAsync();
+
+            return new SelectList(courses, "Id", "Name");
+        }
+
+        public async Task<SelectList> GetAllSelectedAvailableAsync(int studentId)
+        {
+            var courseStudentIds = await _context.CourseStudents
+                .Where(m => m.StudentId == studentId)
+                .Select(m => m.CourseId)
+                .ToListAsync();
+
+            var courses = await _context.Courses
+                .Where(m => courseStudentIds.All(c => c != m.Id) && m.EndDate > DateTime.Now)
+                .ToListAsync();
+
+            return new SelectList(courses, "Id", "Name");
+
         }
 
         public IEnumerable<CourseVM> GetMappedDatas(IEnumerable<Course> courses)

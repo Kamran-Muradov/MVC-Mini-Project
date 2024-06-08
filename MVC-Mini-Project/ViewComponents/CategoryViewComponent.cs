@@ -17,12 +17,13 @@ namespace MVC_Mini_Project.ViewComponents
 
             var categories = await _categoryService.GetAllWithCoursesAsync();
 
-            return await Task.FromResult(View(categories.Select(m=>new CategoryVMVC
-                {
-                    Name = m.Name,
-                    Image = m.Image,
-                    //CourseCount = m.
-                })
+            return await Task.FromResult(View(categories.Select(m => new CategoryVMVC
+            {
+                Name = m.Name,
+                Image = m.Image,
+                CourseCount = m.Courses.Count
+            })
+                .OrderByDescending(m => m.CourseCount)
             ));
         }
     }

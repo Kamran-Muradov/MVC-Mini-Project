@@ -24,7 +24,7 @@ namespace MVC_Mini_Project.ViewComponents
                 Rating = m.Rating,
                 Instructor = m.Instructor.FullName,
                 Duration = m.EndDate.Month - m.StartDate.Month,
-                StudentCount = 0
+                StudentCount = m.CourseStudents.Count
             });
 
             return await Task.FromResult(View(response));

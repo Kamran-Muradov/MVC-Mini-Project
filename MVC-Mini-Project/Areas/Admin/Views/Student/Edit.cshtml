@@ -1,0 +1,77 @@
+﻿@model StudentEditVM
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<section id="student-edit-area">
+    <form class="forms-sample" method="post" asp-action="Edit" enctype="multipart/form-data">
+        <div class="form-group mb-3">
+            <label>Full name</label>
+            <input autocomplete="off" asp-for="FullName" class="form-control" maxlength="300">
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label>Description</label>
+            <textarea autocomplete="off" asp-for="Description" class="form-control" maxlength="300"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label>Email</label>
+            <input autocomplete="off" asp-for="Email" class="form-control" type="text" maxlength="300">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label>Address</label>
+            <input autocomplete="off" asp-for="Address" class="form-control" maxlength="300">
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label>Phone</label>
+            <input autocomplete="off" asp-for="Phone" class="form-control" maxlength="300">
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label>profession</label>
+            <input autocomplete="off" asp-for="Profession" class="form-control" maxlength="300">
+            <span asp-validation-for="Profession" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <img src="~/img/@Model.Image" />
+        </div>
+        <div class="form-group mb-3">
+            <label>Upload Image</label>
+            <input asp-for="NewImage" accept="image/*" class="form-control">
+            <span asp-validation-for="NewImage" class="text-danger"></span>
+        </div>
+        <p><strong>Courses:</strong></p>
+        @foreach (var item in Model.CourseStudents)
+        {
+            <ul class="mb-3 list-group list-group-flush">
+                <li class="list-group-item">
+                    <span class="mx-5">@item.CourseName</span>
+                    <a class="btn btn-danger delete-course"
+                       data-studentId="@item.StudentId"
+                       data-courseId="@item.CourseId">
+                        Delete
+                    </a>
+                </li>
+            </ul>
+        }
+        <div class="form-group mb-3">
+            <label>Add course</label>
+            <select asp-for="CourseId" asp-items="@ViewBag.courses" class="form-select">
+                <option selected="selected" value="@null">-</option>
+            </select>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary me-2 mt-3">Submit</button>
+            <a class="btn btn-light mt-3" asp-action="Index">Cancel</a>
+        </div>
+    </form>
+</section>
+
+@section js {
+    <script src="~/admin/dist/js/delete.js"></script>
+}
+

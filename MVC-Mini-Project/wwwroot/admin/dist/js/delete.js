@@ -64,7 +64,7 @@ $(function () {
 
         $.ajax({
             type: "POST",
-            url: `/admin/instructor/deletesocial`,
+            url: `/admin/instructor/deleteinstructorsocial`,
             data: data,
             success: function () {
                 $(`[data-instructorId=${instructorId}]`).closest("ul").remove();
@@ -88,7 +88,6 @@ $(function () {
 
      $(document).on("click", "#course-area .delete-btn", function () {
         let id = parseInt($(this).attr("data-id"));
-        console.log(id);
 
         $(document).on("click", "#course-area .yes-btn", function () {
             $.ajax({
@@ -99,6 +98,36 @@ $(function () {
                 }
             });
         })
+    })
+
+    $(document).on("click", "#student-area .delete-btn", function () {
+        let id = parseInt($(this).attr("data-id"));
+
+        $(document).on("click", "#student-area .yes-btn", function () {
+            $.ajax({
+                type: "POST",
+                url: `/admin/student/delete?id=${id}`,
+                success: function () {
+                    window.location.reload();
+                }
+            });
+        })
+    })
+
+     $(document).on("click", "#student-edit-area .delete-course", function () {
+        let courseId = parseInt($(this).attr("data-courseId"));
+        let studentId = parseInt($(this).attr("data-studentId"));
+
+        let data = { courseId, studentId };
+
+        $.ajax({
+            type: "POST",
+            url: `/admin/student/deletecoursestudent`,
+            data: data,
+            success: function () {
+                $(`[data-courseId=${courseId}]`).closest("ul").remove();
+            }
+        });
     })
 
 })

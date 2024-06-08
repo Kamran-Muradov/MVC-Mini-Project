@@ -126,7 +126,7 @@ namespace MVC_Mini_Project.Services
                 .FirstOrDefaultAsync();
         }
 
-        public async Task DeleteSocialAsync(InstructorSocialDeleteVM data)
+        public async Task DeleteInstructorSocialAsync(InstructorSocialDeleteVM data)
         {
             var social = await _context.InstructorSocials
                 .FirstOrDefaultAsync(m => m.SocialId == data.SocialId &&

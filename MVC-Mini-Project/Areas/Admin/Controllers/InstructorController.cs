@@ -239,9 +239,9 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteSocial(InstructorSocialDeleteVM request)
+        public async Task<IActionResult> DeleteInstructorSocial(InstructorSocialDeleteVM request)
         {
-            await _instructorService.DeleteSocialAsync(request);
+            await _instructorService.DeleteInstructorSocialAsync(request);
             return Ok();
         }
 

@@ -15,7 +15,7 @@ namespace MVC_Mini_Project.Services.Interfaces
         Task<SelectList> GetAllSelectedAsync();
         Task<Instructor> GetByIdAsync(int id);
         Task<Instructor> GetByIdWithSocialsAsync(int id);
-        Task DeleteSocialAsync(InstructorSocialDeleteVM data);
+        Task DeleteInstructorSocialAsync(InstructorSocialDeleteVM data);
         IEnumerable<InstructorVM> GetMappedDatas(IEnumerable<Instructor> instructors);
         Task<int> GetCountAsync();
         Task<bool> ExistEmailAsync(string email);

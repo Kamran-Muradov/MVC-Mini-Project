@@ -1,0 +1,55 @@
+﻿@model StudentDetailVM
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<div class="card m-auto w-75">
+    <div class="card-body">
+        <h4 class="card-title">Instructor Detailed View</h4>
+        <div class="d-flex">
+        </div>
+        <div class="mt-5 ">
+            <div class="image mb-5">
+                <img src="~/img/@Model.Image" alt="" />
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Full name: </strong>@Model.FullName</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Profession: </strong>@Model.Profession</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Email: </strong>@Model.Email</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Phone: </strong>@Model.Phone</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Address: </strong>@Model.Address</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Create date: </strong>@Model.CreatedDate</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow d-flex">
+                <p class="mb-0 font-weight-light"><strong>Update date: </strong>@Model.UpdatedDate</p>
+            </div>
+            <div class="mb-0 mt-3 flex-grow ">
+                @if (Model.Courses.Count > 0)
+                {
+                    <p class="mb-0 font-weight-light"><strong>Courses:</strong></p>
+                }
+                @foreach (var item in Model.Courses)
+                {
+                    <ul class="mb-3 list-group list-group-flush">
+                        <li class="list-group-item">
+                            <span>@item</span>
+                        </li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
