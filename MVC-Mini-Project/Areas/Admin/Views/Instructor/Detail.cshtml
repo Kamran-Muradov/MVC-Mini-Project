@@ -39,15 +39,15 @@
                 {
                     <p class="mb-0 font-weight-light"><strong>Socials:</strong></p>
                 }
-                @foreach (var item in Model.InstructorSocials)
-                {
-                    <ul class="mb-3 list-group list-group-flush">
+                <ul class="mb-3 list-group list-group-flush">
+                    @foreach (var item in Model.InstructorSocials)
+                    {
                         <li class="list-group-item">
                             <i class="@item.Icon" style="font-size:25px"></i>
                             <a class="mx-5" href="@item.Link">@item.Link</a>
                         </li>
-                    </ul>
-                }
+                    }
+                </ul>
             </div>
         </div>
     </div>

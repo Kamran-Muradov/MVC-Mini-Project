@@ -39,9 +39,10 @@
             <input asp-for="NewImage" accept="image/*" class="form-control">
             <span asp-validation-for="NewImage" class="text-danger"></span>
         </div>
-        @foreach (var item in Model.InstructorSocials)
-        {
-            <ul class="mb-3 list-group list-group-flush">
+        <ul class="mb-3 list-group list-group-flush">
+
+            @foreach (var item in Model.InstructorSocials)
+            {
                 <li class="list-group-item">
                     <i class="@item.Icon" style="font-size:25px"></i>
                     <a class="mx-5" href="@item.Link">@item.Link</a>
@@ -52,8 +53,8 @@
                         Delete
                     </a>
                 </li>
-            </ul>
-        }
+            }
+        </ul>
         <div>
             <button type="submit" class="btn btn-primary me-2 mt-3">Submit</button>
             <a class="btn btn-light mt-3" asp-action="Index">Cancel</a>

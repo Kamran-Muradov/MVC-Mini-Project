@@ -1,0 +1,55 @@
+﻿@model List<UserRoleVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="page-header d-print-none mb-5">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+                <!-- Page pre-title -->
+                <h2 class="page-title">
+                    Users
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+<section id="user-area">
+    <div class="card">
+        <div class="card-body">
+            <div id="table-default" class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><button class="table-sort" data-sort="sort-name">Full name</button></th>
+                            <th><button class="table-sort" data-sort="sort-name">Username</button></th>
+                            <th><button class="table-sort" data-sort="sort-name">Email</button></th>
+                            <th><button class="table-sort" data-sort="sort-name">Roles</button></th>
+                            <th>Operations</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-tbody">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="sort-name">@item.FullName</td>
+                                <td class="sort-name">@item.UserName</td>
+                                <td class="sort-name">@item.Email</td>
+                                <td class="sort-name">@item.Roles</td>
+                                <td>
+                                    <a asp-action="AddRole" asp-route-id="@item.Id" class="btn btn-primary d-none d-sm-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                                        Add roles
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+

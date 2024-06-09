@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MVC_Mini_Project.Helpers;
-using MVC_Mini_Project.Helpers.Extensions;
 using MVC_Mini_Project.Services.Interfaces;
 using MVC_Mini_Project.ViewModels.Informations;
 
 namespace MVC_Mini_Project.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class InformationController : Controller
     {
         private readonly IInformationService _informationService;
@@ -41,6 +42,7 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> Create()
         {
             var icons = await _informationIconService.GetAllAsync();
@@ -56,6 +58,7 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> Create(InformationCreateVM request)
         {
             if (!ModelState.IsValid)

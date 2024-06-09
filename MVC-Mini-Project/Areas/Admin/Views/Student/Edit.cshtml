@@ -45,9 +45,10 @@
             <span asp-validation-for="NewImage" class="text-danger"></span>
         </div>
         <p><strong>Courses:</strong></p>
-        @foreach (var item in Model.CourseStudents)
-        {
-            <ul class="mb-3 list-group list-group-flush">
+        <ul class="mb-3 list-group list-group-flush">
+
+            @foreach (var item in Model.CourseStudents)
+            {
                 <li class="list-group-item">
                     <span class="mx-5">@item.CourseName</span>
                     <a class="btn btn-danger delete-course"
@@ -56,8 +57,8 @@
                         Delete
                     </a>
                 </li>
-            </ul>
-        }
+            }
+        </ul>
         <div class="form-group mb-3">
             <label>Add course</label>
             <select asp-for="CourseId" asp-items="@ViewBag.courses" class="form-select">

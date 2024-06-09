@@ -288,6 +288,40 @@ namespace MVC_Mini_Project.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("MVC_Mini_Project.Models.Contact", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("SoftDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Contacts");
+                });
+
             modelBuilder.Entity("MVC_Mini_Project.Models.Course", b =>
                 {
                     b.Property<int>("Id")
@@ -534,7 +568,7 @@ namespace MVC_Mini_Project.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 6, 8, 22, 34, 56, 27, DateTimeKind.Local).AddTicks(2261),
+                            CreatedDate = new DateTime(2024, 6, 9, 15, 40, 13, 616, DateTimeKind.Local).AddTicks(5537),
                             Key = "Location",
                             SoftDeleted = false,
                             Value = "123 Street, New York, USA"
@@ -542,7 +576,7 @@ namespace MVC_Mini_Project.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 6, 8, 22, 34, 56, 27, DateTimeKind.Local).AddTicks(2263),
+                            CreatedDate = new DateTime(2024, 6, 9, 15, 40, 13, 616, DateTimeKind.Local).AddTicks(5539),
                             Key = "Phone",
                             SoftDeleted = false,
                             Value = "+012 345 67890"
@@ -550,7 +584,7 @@ namespace MVC_Mini_Project.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2024, 6, 8, 22, 34, 56, 27, DateTimeKind.Local).AddTicks(2264),
+                            CreatedDate = new DateTime(2024, 6, 9, 15, 40, 13, 616, DateTimeKind.Local).AddTicks(5540),
                             Key = "Email",
                             SoftDeleted = false,
                             Value = "info@example.com"
@@ -558,10 +592,42 @@ namespace MVC_Mini_Project.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2024, 6, 8, 22, 34, 56, 27, DateTimeKind.Local).AddTicks(2265),
+                            CreatedDate = new DateTime(2024, 6, 9, 15, 40, 13, 616, DateTimeKind.Local).AddTicks(5541),
                             Key = "Logo",
                             SoftDeleted = false,
                             Value = "fa fa-book me-3"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedDate = new DateTime(2024, 6, 9, 15, 40, 13, 616, DateTimeKind.Local).AddTicks(5542),
+                            Key = "Twitter",
+                            SoftDeleted = false,
+                            Value = "twitter.com"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedDate = new DateTime(2024, 6, 9, 15, 40, 13, 616, DateTimeKind.Local).AddTicks(5543),
+                            Key = "Facebook",
+                            SoftDeleted = false,
+                            Value = "facebook.com"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedDate = new DateTime(2024, 6, 9, 15, 40, 13, 616, DateTimeKind.Local).AddTicks(5543),
+                            Key = "Youtube",
+                            SoftDeleted = false,
+                            Value = "youtube.com"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedDate = new DateTime(2024, 6, 9, 15, 40, 13, 616, DateTimeKind.Local).AddTicks(5544),
+                            Key = "Linkedin",
+                            SoftDeleted = false,
+                            Value = "linkedin.com"
                         });
                 });
 
@@ -602,7 +668,7 @@ namespace MVC_Mini_Project.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 6, 8, 22, 34, 56, 27, DateTimeKind.Local).AddTicks(2185),
+                            CreatedDate = new DateTime(2024, 6, 9, 15, 40, 13, 616, DateTimeKind.Local).AddTicks(5410),
                             Description = "Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea sanctus eirmod elitr.",
                             Image = "carousel-1.jpg",
                             SoftDeleted = false,
@@ -611,7 +677,7 @@ namespace MVC_Mini_Project.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 6, 8, 22, 34, 56, 27, DateTimeKind.Local).AddTicks(2187),
+                            CreatedDate = new DateTime(2024, 6, 9, 15, 40, 13, 616, DateTimeKind.Local).AddTicks(5412),
                             Description = "Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea sanctus eirmod elitr.",
                             Image = "carousel-2.jpg",
                             SoftDeleted = false,

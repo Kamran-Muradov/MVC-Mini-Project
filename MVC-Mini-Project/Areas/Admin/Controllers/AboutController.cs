@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MVC_Mini_Project.Helpers.Extensions;
 using MVC_Mini_Project.Services.Interfaces;
 using MVC_Mini_Project.ViewModels.Abouts;
@@ -6,6 +7,7 @@ using MVC_Mini_Project.ViewModels.Abouts;
 namespace MVC_Mini_Project.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class AboutController : Controller
     {
         private readonly IAboutService _aboutService;
@@ -37,6 +39,7 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> Create(AboutCreateVM request)
         {
             if (!ModelState.IsValid)

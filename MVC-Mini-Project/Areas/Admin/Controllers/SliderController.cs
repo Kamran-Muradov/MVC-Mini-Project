@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MVC_Mini_Project.Helpers;
 using MVC_Mini_Project.Helpers.Extensions;
 using MVC_Mini_Project.Services.Interfaces;
@@ -7,6 +8,7 @@ using MVC_Mini_Project.ViewModels.Sliders;
 namespace MVC_Mini_Project.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class SliderController : Controller
     {
         private readonly ISliderService _sliderService;
@@ -37,6 +39,7 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin")]
         public IActionResult Create()
         {
             return View();
@@ -44,6 +47,7 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> Create(SliderCreateVM request)
         {
             if (!ModelState.IsValid)

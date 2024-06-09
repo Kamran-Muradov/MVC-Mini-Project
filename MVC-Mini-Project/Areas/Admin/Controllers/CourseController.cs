@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MVC_Mini_Project.Helpers;
 using MVC_Mini_Project.Helpers.Extensions;
-using MVC_Mini_Project.Models;
 using MVC_Mini_Project.Services.Interfaces;
 using MVC_Mini_Project.ViewModels.Courses;
 
 namespace MVC_Mini_Project.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class CourseController : Controller
     {
         private readonly ICourseService _courseService;
@@ -39,6 +40,7 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin")]
         public IActionResult Create()
         {
             ViewBag.categories = _categoryService.GetAllSelectedAsync().Result.OrderBy(m => m.Text);
@@ -48,6 +50,7 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> Create(CourseCreateVM request)
         {
             if (!ModelState.IsValid)

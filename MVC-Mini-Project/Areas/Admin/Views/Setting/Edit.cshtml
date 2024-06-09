@@ -1,0 +1,19 @@
+﻿@model SettingEditVM
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<form class="forms-sample" method="post" asp-action="Edit" enctype="multipart/form-data">
+    <div class="form-group mb-3">
+        <label>Value</label>
+        <input autocomplete="off" asp-for="Value" class="form-control" maxlength="300">
+        <span asp-validation-for="Value" class="text-danger"></span>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary me-2 mt-3">Submit</button>
+        <a class="btn btn-light mt-3" asp-action="Index">Cancel</a>
+    </div>
+</form>
+
+

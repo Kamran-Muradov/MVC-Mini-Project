@@ -20,6 +20,7 @@ namespace MVC_Mini_Project.Data
         public DbSet<Student> Students { get; set; }
         public DbSet<CourseStudent> CourseStudents { get; set; }
         public DbSet<Setting> Settings { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -33,6 +34,7 @@ namespace MVC_Mini_Project.Data
             builder.Entity<Course>().HasQueryFilter(m => !m.SoftDeleted);
             builder.Entity<Student>().HasQueryFilter(m => !m.SoftDeleted);
             builder.Entity<Setting>().HasQueryFilter(m => !m.SoftDeleted);
+            builder.Entity<Contact>().HasQueryFilter(m => !m.SoftDeleted);
 
             builder.Entity<Slider>().HasData(
                 new Slider
@@ -85,6 +87,38 @@ namespace MVC_Mini_Project.Data
                     Id = 4,
                     Key = "Logo",
                     Value = "fa fa-book me-3",
+                    CreatedDate = DateTime.Now,
+                    SoftDeleted = false,
+                },
+                new Setting
+                {
+                    Id = 5,
+                    Key = "Twitter",
+                    Value = "twitter.com",
+                    CreatedDate = DateTime.Now,
+                    SoftDeleted = false,
+                },
+                new Setting
+                {
+                    Id = 6,
+                    Key = "Facebook",
+                    Value = "facebook.com",
+                    CreatedDate = DateTime.Now,
+                    SoftDeleted = false,
+                },
+                new Setting
+                {
+                    Id = 7,
+                    Key = "Youtube",
+                    Value = "youtube.com",
+                    CreatedDate = DateTime.Now,
+                    SoftDeleted = false,
+                },
+                new Setting
+                {
+                    Id = 8,
+                    Key = "Linkedin",
+                    Value = "linkedin.com",
                     CreatedDate = DateTime.Now,
                     SoftDeleted = false,
                 }

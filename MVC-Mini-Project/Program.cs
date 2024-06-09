@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using MVC_Mini_Project.Data;
+using MVC_Mini_Project.Helpers;
 using MVC_Mini_Project.Models;
 using MVC_Mini_Project.Services;
 using MVC_Mini_Project.Services.Interfaces;
@@ -23,8 +24,11 @@ builder.Services.Configure<IdentityOptions>(opt =>
     opt.Password.RequireDigit = true;
     opt.Password.RequireLowercase = true;
     opt.Password.RequireUppercase = true;
+    opt.SignIn.RequireConfirmedEmail = true;
 
 });
+
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Smtp"));
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
@@ -39,6 +43,10 @@ builder.Services.AddScoped<ISocialService, SocialService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ISettingService, SettingService>();
+builder.Services.AddScoped<IContactService, ContactService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

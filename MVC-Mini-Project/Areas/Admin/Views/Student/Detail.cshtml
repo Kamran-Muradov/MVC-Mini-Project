@@ -39,14 +39,15 @@
                 {
                     <p class="mb-0 font-weight-light"><strong>Courses:</strong></p>
                 }
+                <ul class="mb-3 list-group list-group-flush">
+
                 @foreach (var item in Model.Courses)
                 {
-                    <ul class="mb-3 list-group list-group-flush">
                         <li class="list-group-item">
                             <span>@item</span>
                         </li>
-                    </ul>
                 }
+                </ul>
             </div>
         </div>
     </div>

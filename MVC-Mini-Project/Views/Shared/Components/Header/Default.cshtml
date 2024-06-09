@@ -21,8 +21,32 @@
                 </div>
             </div>
             <a asp-controller="Contact" asp-action="Index" class="nav-item nav-link">Contact</a>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Account</a>
+                <div class="dropdown-menu fade-down m-0">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole("Admin")||User.IsInRole("SuperAdmin"))
+                        {
+                        <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="dropdown-item">Go to Admin</a>
+                        }
+                        <form method="post" asp-controller="Account" asp-action="Logout">
+                            <input type="submit" class="dropdown-item" value="Logout"/>
+                        </form>
+                    }
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="SignIn" class="dropdown-item">Sign in</a>
+                        <a asp-controller="Account" asp-action="SignUp" class="dropdown-item">Sign Up</a>
+                    }
+                 
+                </div>
+            </div>
         </div>
-        <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i class="fa fa-arrow-right ms-3"></i></a>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">@User.Identity.Name<i class="fa fa-arrow-right ms-3"></i></a>
+        }
     </div>
 </nav>
 

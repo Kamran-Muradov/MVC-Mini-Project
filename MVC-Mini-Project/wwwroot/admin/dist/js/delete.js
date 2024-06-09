@@ -13,7 +13,7 @@ $(function () {
         })
     })
 
-    $(document).on("click", "#information-area .delete-btn", function () {
+    $(document).on("submit", "#information-area .delete-btn", function (e) {
         let id = parseInt($(this).attr("data-id"));
 
         $(document).on("click", "#information-area .yes-btn", function () {
@@ -55,24 +55,26 @@ $(function () {
         })
     })
 
-    $(document).on("click", "#instructor-edit-area .delete-social", function () { 
+    $(document).on("click", "#instructor-edit-area .delete-social", function () {
         let instructorId = parseInt($(this).attr("data-instructorId"));
         let socialId = parseInt($(this).attr("data-socialId"));
         let link = $(this).attr("data-link");
 
         let data = { instructorId, socialId, link };
 
+        let li = $(this).closest("li")
+
         $.ajax({
             type: "POST",
             url: `/admin/instructor/deleteinstructorsocial`,
             data: data,
             success: function () {
-                $(`[data-instructorId=${instructorId}]`).closest("ul").remove();
+                li.remove();
             }
         });
     })
 
-      $(document).on("click", "#instructor-area .delete-btn", function () {
+    $(document).on("click", "#instructor-area .delete-btn", function () {
         let id = parseInt($(this).attr("data-id"));
 
         $(document).on("click", "#instructor-area .yes-btn", function () {
@@ -86,7 +88,7 @@ $(function () {
         })
     })
 
-     $(document).on("click", "#course-area .delete-btn", function () {
+    $(document).on("click", "#course-area .delete-btn", function () {
         let id = parseInt($(this).attr("data-id"));
 
         $(document).on("click", "#course-area .yes-btn", function () {
@@ -114,18 +116,20 @@ $(function () {
         })
     })
 
-     $(document).on("click", "#student-edit-area .delete-course", function () {
+    $(document).on("click", "#student-edit-area .delete-course", function () {
         let courseId = parseInt($(this).attr("data-courseId"));
         let studentId = parseInt($(this).attr("data-studentId"));
 
         let data = { courseId, studentId };
+
+        let li = $(this).closest("li")
 
         $.ajax({
             type: "POST",
             url: `/admin/student/deletecoursestudent`,
             data: data,
             success: function () {
-                $(`[data-courseId=${courseId}]`).closest("ul").remove();
+                li.remove();
             }
         });
     })
