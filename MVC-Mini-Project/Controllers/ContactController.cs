@@ -24,12 +24,10 @@ namespace MVC_Mini_Project.Controllers
 
         public async Task<IActionResult> Index()
         {
-           
 
-            var response = new ContactCreateVM
-            {
-                Settings = await _settingService.GetAllAsync()
-            };
+            ViewBag.settings = await _settingService.GetAllAsync();
+            var response = new ContactCreateVM();
+
 
             if (User.Identity.IsAuthenticated)
             {
@@ -45,12 +43,20 @@ namespace MVC_Mini_Project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ContactCreateVM request)
         {
+            var response = new ContactCreateVM();
+
             if (!ModelState.IsValid)
             {
-                return View("Index", new ContactCreateVM
+                ViewBag.settings = await _settingService.GetAllAsync();
+
+                if (User.Identity.IsAuthenticated)
                 {
-                    Settings = await _settingService.GetAllAsync()
-                });
+                    var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+                    response.Email = user.Email;
+                }
+
+                return View("Index", response);
             }
 
             await _contactService.CreateAsync(request);

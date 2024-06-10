@@ -14,10 +14,10 @@ namespace MVC_Mini_Project.ViewModels.Courses
         public int Rating { get; set; }
         public int CategoryId { get; set; }
         public int InstructorId { get; set; }
-        [Required]
-        public DateTime StartDate { get; set; }
-        [Required]
-        public DateTime EndDate { get; set; }
+        [Required(ErrorMessage = "Start date is required")]
+        public DateTime? StartDate { get; set; }
+        [Required(ErrorMessage = "End date is required")]
+        public DateTime? EndDate { get; set; }
         [Required]
         public List<IFormFile> Images { get; set; }
     }

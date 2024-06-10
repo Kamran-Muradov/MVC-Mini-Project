@@ -62,7 +62,12 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
 
             var role = await _roleManager.FindByIdAsync(request.RoleId);
 
-            await _userManager.AddToRoleAsync(user, role.Name);
+            if (request.RoleId is not null)
+            {
+                await _userManager.AddToRoleAsync(user, role.Name);
+
+                return RedirectToAction(nameof(Index));
+            }
 
             return RedirectToAction(nameof(Index));
         }

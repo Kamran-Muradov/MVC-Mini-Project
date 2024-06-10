@@ -81,7 +81,7 @@ namespace MVC_Mini_Project.Services
             await _context.InstructorSocials.AddAsync(new InstructorSocial
             {
                 InstructorId = id,
-                SocialId = data.SocialId,
+                SocialId = (int)data.SocialId,
                 Link = data.SocialLink
             });
 

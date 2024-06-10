@@ -11,6 +11,7 @@ namespace MVC_Mini_Project.Services.Interfaces
         Task DeleteAsync(Social social);
         Task<IEnumerable<Social>> GetAllAsync();
         Task<SelectList> GetAllSelectedAsync();
+        Task<SelectList> GetAllSelectedAvailableAsync(int instructorId);
         Task<Social> GetByIdAsync(int id);
         Task<bool> ExistAsync(string name);
 

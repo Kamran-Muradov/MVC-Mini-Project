@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MVC_Mini_Project.Helpers.Enums;
+using MVC_Mini_Project.Helpers.Extensions;
 using MVC_Mini_Project.Models;
 using MVC_Mini_Project.Services.Interfaces;
 using MVC_Mini_Project.ViewModels.Accounts;
@@ -13,17 +14,20 @@ namespace MVC_Mini_Project.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IEmailService _emailService;
+        private readonly IWebHostEnvironment _env;
 
         public AccountController(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             RoleManager<IdentityRole> roleManager,
-            IEmailService emailService)
+            IEmailService emailService,
+            IWebHostEnvironment env)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _emailService = emailService;
+            _env = env;
         }
 
         [HttpGet]
@@ -71,9 +75,13 @@ namespace MVC_Mini_Project.Controllers
 
             var url = Url.Action(nameof(ConfirmEmail), "Account", new { userId = user.Id, token }, Request.Scheme, Request.Host.ToString());
 
-            string html = $"<a href='{url}' >Click to confirm email</a>";
+            string path = _env.GenerateFilePath("templates", "confirm.html");
 
-            _emailService.Send(user.Email, "Email confirmation", html);
+            string html = await path.ReadFromFileAsync();
+
+            string confirmHtml = html.Replace("verify-link", url);
+
+            _emailService.Send(user.Email, "Email confirmation", confirmHtml);
 
             return RedirectToAction(nameof(VerifyEmail));
         }

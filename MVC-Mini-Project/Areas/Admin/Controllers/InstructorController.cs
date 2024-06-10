@@ -121,12 +121,12 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
             if (instructor is null) return NotFound();
 
             request.InstructorSocials = instructor.InstructorSocials.Select(m => new InstructorSocialVM
-                {
-                    InstructorId = instructor.Id,
-                    SocialId = m.SocialId,
-                    Icon = m.Social.Icon,
-                    Link = m.Link
-                })
+            {
+                InstructorId = instructor.Id,
+                SocialId = m.SocialId,
+                Icon = m.Social.Icon,
+                Link = m.Link
+            })
                 .ToList();
 
             if (!ModelState.IsValid)
@@ -205,10 +205,10 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
                 CreatedDate = instructor.CreatedDate.ToString("MM.dd.yyyy"),
                 UpdatedDate = instructor.UpdatedDate != null ? instructor.UpdatedDate.Value.ToString("MM.dd.yyyy") : "N/A",
                 InstructorSocials = instructor.InstructorSocials.Select(m => new InstructorSocialVM
-                    {
-                        Icon = m.Social.Icon,
-                        Link = m.Link
-                    })
+                {
+                    Icon = m.Social.Icon,
+                    Link = m.Link
+                })
                     .ToList()
             });
         }
@@ -222,7 +222,7 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
 
             if (instructor is null) return NotFound();
 
-            ViewBag.socials = await _socialService.GetAllSelectedAsync();
+            ViewBag.socials = await _socialService.GetAllSelectedAvailableAsync((int)id);
 
             return View();
         }
@@ -237,9 +237,15 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
 
             if (instructor is null) return NotFound();
 
-            await _instructorService.AddSocialAsync((int)id, request);
+            if (request.SocialId is not null)
+            {
+                await _instructorService.AddSocialAsync((int)id, request);
+
+                return RedirectToAction(nameof(Index));
+            }
 
             return RedirectToAction(nameof(Index));
+
         }
 
         [HttpPost]

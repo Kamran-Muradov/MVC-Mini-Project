@@ -7,7 +7,9 @@
 <form class="forms-sample" method="post" asp-action="AddRole" enctype="multipart/form-data">
     <div class="form-group mb-3">
         <label>Choose role</label>
-        <select asp-for="RoleId" asp-items="@ViewBag.roles" class="form-select"> </select>
+        <select asp-for="RoleId" asp-items="@ViewBag.roles" class="form-select">
+            <option selected="selected" value="@null">-</option>
+        </select>
     </div>
     <button type="submit" class="btn btn-primary me-2 mt-3">Submit</button>
     <a class="btn btn-light mt-3" asp-action="Index">Cancel</a>

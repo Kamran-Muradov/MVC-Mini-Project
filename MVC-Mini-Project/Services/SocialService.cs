@@ -56,6 +56,20 @@ namespace MVC_Mini_Project.Services
             return new SelectList(socials, "Id", "Name");
         }
 
+        public async Task<SelectList> GetAllSelectedAvailableAsync(int instructorId)
+        {
+            var instructorSocialIds = await _context.InstructorSocials
+                .Where(m => m.InstructorId == instructorId)
+                .Select(m => m.SocialId)
+                .ToListAsync();
+
+            var courses = await _context.Socials
+                .Where(m => instructorSocialIds.All(c => c != m.Id))
+                .ToListAsync();
+
+            return new SelectList(courses, "Id", "Name");
+        }
+
         public async Task<Social> GetByIdAsync(int id)
         {
             return await _context.Socials.FindAsync(id);

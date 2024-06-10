@@ -25,8 +25,8 @@ builder.Services.Configure<IdentityOptions>(opt =>
     opt.Password.RequireLowercase = true;
     opt.Password.RequireUppercase = true;
     opt.SignIn.RequireConfirmedEmail = true;
-
 });
+
 
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Smtp"));
 
@@ -50,13 +50,17 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-//if (!app.Environment.IsDevelopment())
-//{
-//    app.UseExceptionHandler("/Home/Error");
-//    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-//    app.UseHsts();
-//}
+if (app.Environment.IsDevelopment())
+{
+    //app.UseDeveloperExceptionPage();
+    app.UseExceptionHandler("/error/{0}");
+    app.UseHsts();
+}
+else
+{
+    app.UseStatusCodePagesWithReExecute("/error/{0}");
+    app.UseHsts();
+}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -74,5 +78,7 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseStatusCodePagesWithRedirects("/Error/{0}");
 
 app.Run();

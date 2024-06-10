@@ -14,7 +14,6 @@ namespace MVC_Mini_Project.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-
             var courses = await _courseService.GetAllPopularAsync();
             var response = courses.Select(m => new CourseVMVC
             {
@@ -23,7 +22,7 @@ namespace MVC_Mini_Project.ViewComponents
                 Price = m.Price,
                 Rating = m.Rating,
                 Instructor = m.Instructor.FullName,
-                Duration = m.EndDate.Month - m.StartDate.Month,
+                Duration = Math.Ceiling((decimal)(m.EndDate - m.StartDate).Days / 30),
                 StudentCount = m.CourseStudents.Count
             });
 
@@ -36,9 +35,9 @@ namespace MVC_Mini_Project.ViewComponents
         public string Name { get; set; }
         public string MainImage { get; set; }
         public decimal Price { get; set; }
-        public int Rating { get; set; }
+        public decimal Rating { get; set; }
         public string Instructor { get; set; }
-        public int Duration { get; set; }
+        public decimal Duration { get; set; }
         public int StudentCount { get; set; }
     }
 }

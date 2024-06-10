@@ -47,8 +47,8 @@ namespace MVC_Mini_Project.Services
                 Rating = data.Rating,
                 Price = decimal.Parse(data.Price),
                 CourseImages = images,
-                StartDate = data.StartDate,
-                EndDate = data.EndDate
+                StartDate = data.StartDate.Value,
+                EndDate = data.EndDate.Value
             };
 
             await _context.Courses.AddAsync(course);
@@ -89,8 +89,8 @@ namespace MVC_Mini_Project.Services
             course.CategoryId = data.CategoryId;
             course.InstructorId = data.InstructorId;
             course.Rating = data.Rating;
-            course.StartDate = data.StartDate;
-            course.EndDate = data.EndDate;
+            course.StartDate = data.StartDate.Value;
+            course.EndDate = data.EndDate.Value;
             course.UpdatedDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
@@ -139,7 +139,6 @@ namespace MVC_Mini_Project.Services
                 .ToListAsync();
 
             return new SelectList(courses, "Id", "Name");
-
         }
 
         public IEnumerable<CourseVM> GetMappedDatas(IEnumerable<Course> courses)
