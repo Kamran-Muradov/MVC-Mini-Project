@@ -1,0 +1,31 @@
+﻿@model SocialEditVM
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<section id="social-edit-area">
+    <form class="forms-sample" method="post" asp-action="Edit" enctype="multipart/form-data">
+        <div class="form-group mb-3">
+            <label>Name</label>
+            <input autocomplete="off" asp-for="Name" class="form-control" maxlength="300">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <i class="social-icon d-block mb-3 @Model.Icon" style="font-size:30px"></i>
+            <label>FontAwesome icon class </label>
+            <a class="mx-5" href="https://fontawesome.com/">Get more icons</a>
+            <input autocomplete="off" asp-for="Icon" class="class-input form-control mt-3" maxlength="300">
+            <span asp-validation-for="Icon" class="text-danger"></span>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary me-2 mt-3">Submit</button>
+            <a class="btn btn-light mt-3" asp-action="Index">Cancel</a>
+        </div>
+    </form>
+</section>
+
+@section js
+{
+    <script src="~/admin/dist/js/social.js"></script>
+}

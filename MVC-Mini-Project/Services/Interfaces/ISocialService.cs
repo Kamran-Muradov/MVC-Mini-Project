@@ -12,5 +12,7 @@ namespace MVC_Mini_Project.Services.Interfaces
         Task<IEnumerable<Social>> GetAllAsync();
         Task<SelectList> GetAllSelectedAsync();
         Task<Social> GetByIdAsync(int id);
+        Task<bool> ExistAsync(string name);
+
     }
 }

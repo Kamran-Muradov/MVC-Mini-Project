@@ -144,7 +144,7 @@ namespace MVC_Mini_Project.Areas.Admin.Controllers
 
             await _categoryService.DeleteAsync(category);
 
-            return RedirectToAction(nameof(Index));
+            return Ok();
         }
 
         [HttpGet]

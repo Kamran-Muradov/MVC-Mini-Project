@@ -22,7 +22,9 @@ namespace MVC_Mini_Project.Services
 
         public async Task<IEnumerable<Setting>> GetAllListedAsync()
         {
-            return await _context.Settings.ToListAsync();
+            return await _context.Settings
+                .OrderByDescending(m=>m.Id)
+                .ToListAsync();
         }
 
         public async Task<Setting> GetByIdAsync(int id)

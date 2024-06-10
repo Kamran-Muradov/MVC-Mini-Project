@@ -1,42 +1,31 @@
-﻿@model IEnumerable<SocialVM>
+﻿@model IEnumerable<ContactVM>
 
 @{
     ViewData["Title"] = "Index";
 }
-
 <div class="page-header d-print-none mb-5">
     <div class="container-xl">
         <div class="row g-2 align-items-center">
             <div class="col">
                 <!-- Page pre-title -->
                 <h2 class="page-title">
-                    Socials
+                    Contacts
                 </h2>
             </div>
-            <!-- Page title actions -->
-            @if (User.IsInRole("SuperAdmin"))
-            {
-                <div class="col-auto ms-auto d-print-none">
-                    <div class="btn-list">
-                        <a asp-action="Create" class="btn btn-primary d-none d-sm-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                            Create new social
-                        </a>
-                    </div>
-                </div>
-            }
         </div>
     </div>
 </div>
-<section id="social-area">
+<section id="contact-area">
     <div class="card">
         <div class="card-body">
             <div id="table-default" class="table-responsive">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Icon</th>
-                            <th><button class="table-sort" data-sort="sort-name">Name</button></th>
+                            <th><button class="table-sort" data-sort="sort-name">Full name</button></th>
+                            <th><button class="table-sort" data-sort="sort-name">Email</button></th>
+                            <th><button class="table-sort" data-sort="sort-name">Subject</button></th>
+                            <th><button class="table-sort" data-sort="sort-name">Message</button></th>
                             <th>Operations</th>
                         </tr>
                     </thead>
@@ -44,12 +33,11 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td class="sort-name"><i class="@item.Icon"></i></td>
-                                <td class="sort-name">@item.Name</td>
+                                <td class="sort-name">@item.FullName</td>
+                                <td class="sort-name">@item.Email</td>
+                                <td class="sort-name">@item.Subject</td>
+                                <td class="sort-name">@item.Message</td>
                                 <td>
-                                    <a class="btn btn-warning btn-icon" asp-action="Edit" asp-route-id="@item.Id">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-pencil"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
-                                    </a>
                                     <a class="btn btn-danger btn-icon delete-btn" data-id="@item.Id" data-bs-toggle="modal" data-bs-target="#modal-small">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
                                     </a>
@@ -70,7 +58,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger yes-btn" data-id="0" data-bs-dismiss="modal">Yes, delete this social</button>
+                    <button type="button" class="btn btn-danger yes-btn" data-id="0" data-bs-dismiss="modal">Yes, delete this contact</button>
                 </div>
             </div>
         </div>
@@ -80,4 +68,5 @@
 @section js {
     <script src="~/admin/dist/js/delete.js"></script>
 }
+
 

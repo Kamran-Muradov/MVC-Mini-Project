@@ -44,7 +44,9 @@ namespace MVC_Mini_Project.Services
 
         public async Task<IEnumerable<Social>> GetAllAsync()
         {
-            return await _context.Socials.ToListAsync();
+            return await _context.Socials
+                .OrderByDescending(m => m.Id)
+                .ToListAsync();
         }
 
         public async Task<SelectList> GetAllSelectedAsync()
@@ -57,6 +59,11 @@ namespace MVC_Mini_Project.Services
         public async Task<Social> GetByIdAsync(int id)
         {
             return await _context.Socials.FindAsync(id);
+        }
+
+        public async Task<bool> ExistAsync(string name)
+        {
+            return await _context.Socials.AnyAsync(m => m.Name.Trim().ToLower() == name.Trim().ToLower());
         }
     }
 }
